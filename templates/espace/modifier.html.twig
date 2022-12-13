@@ -1,0 +1,10 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Modifier un espace{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <h1>Modifier l'espace : <i><b>{{ espace.nom }}</b></i></h1>
+        {{ form(formulaire) }}
+    </div>
+{% endblock %}

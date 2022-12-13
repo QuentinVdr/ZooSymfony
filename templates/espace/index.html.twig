@@ -1,20 +1,32 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello EspaceController!{% endblock %}
+{% block title %}Gestion du Zoo{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
+    <div class="container">
+        <h1>Gestion du zoo</h1>
+        <table class="table table-striped">
+            <tr>
+                <th>Nom</th>
+                <th>Superficie</th>
+                <th></th>
+            </tr>
+            {% for e in espace %}
+                <tr>
+                    <td>{{ e.nom }}</td>
+                    <td>{{ e.superficie }}</td>
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
+                    <td>
+                        <a href="{{ path("app_espace_modifier", {"id":e.id}) }}" class="btn btn-info">Modifier l'espace</a>
+                        <a href="{{ path("app_espace_supprimer", {"id":e.id}) }}" class="btn btn-danger">Supprimer l'espace</a>
+                        <a href="{{ path("app_enclos", {"id":e.id}) }}" class="btn btn-warning">Voir les enclos</a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </table>
+        <a href="{{ path("app_espace_ajouter") }}" class="btn btn-primary">Ajouter un espace</a>
+        <a href="{{ path("app_enclos_ajouter") }}" class="btn btn-primary">Ajouter un enclos</a>
+        <a href="{{ path('app_animal_ajouter') }}" class="btn btn-primary">Ajouter un animal</a>
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ 'C:/Users/quent/OneDrive/Documents/WorkSpace/EPSI/CoursSymfony/ZooSymfony/src/Controller/EspaceController.php'|file_link(0) }}">src/Controller/EspaceController.php</a></code></li>
-        <li>Your template at <code><a href="{{ 'C:/Users/quent/OneDrive/Documents/WorkSpace/EPSI/CoursSymfony/ZooSymfony/templates/espace/index.html.twig'|file_link(0) }}">templates/espace/index.html.twig</a></code></li>
-    </ul>
-</div>
+    </div>
 {% endblock %}

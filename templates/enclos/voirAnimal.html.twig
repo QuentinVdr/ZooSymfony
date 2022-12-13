@@ -1,0 +1,10 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Voir animal de l'enlos{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <h1>Voir animal de l'enclo {{ enclos.nom }}</h1>
+        {{ form(formulaire) }}
+    </div>
+{% endblock %}
