@@ -127,7 +127,7 @@ class EspaceController extends AbstractController
 
         return $this->render('espace/voirAnimal.html.twig', [
             'espace' => $espace,
-            "animal" => $espace->getEnclos()->getAnimals()
+            "animal" => $espace->getEnclos()->GetAnimal()
         ]);
     }
 

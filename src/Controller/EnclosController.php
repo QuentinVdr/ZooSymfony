@@ -141,9 +141,9 @@ class EnclosController extends AbstractController
             throw $this->createNotFoundException("Aucun enclos avec l'id $id");
         }
 
-        return $this->render('enclo/voirAnimal.html.twig', [
+        return $this->render('enclos/voirAnimal.html.twig', [
             'enclo' => $enclo,
-            "animal" => $enclo->getAnimal()
+            "animal" => $enclo->getAnimals()
         ]);
     }
 
