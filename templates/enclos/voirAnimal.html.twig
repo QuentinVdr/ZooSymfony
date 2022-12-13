@@ -9,20 +9,48 @@
     </style>
 
     <div class="container">
-        {% for a in animal %}
-        <h1>Gestion des animaux {{ a.nom }}</h1>
-        <div class="row">
-                <div class="col col-3">
-                    <div class="card-body">
-                        <span>Je m'appelle <b>{{ a.nom }}</b></span>
-                        <div class="bouton-animal">
-                            <a href="{{ path("app_animal_modifier", {"id": a.id}) }}" class="btn btn-info">modifier</a>
-                            <a href="{{ path("app_animal_supprimer", {"id": a.id}) }}" class="btn btn-danger">supprimer</a>
-                        </div>
-                    </div>
-                </div>
+        <h1>Gestion des animaux de l'enclos : <b>{{ enclo.nom }}</b></h1>
+        <table class="table table-striped">
+            <tr>
+                <th>nom</th>
+                <th>identification</th>
+                <th>genre</th>
+                <th>sexe</th>
+                <th>espece</th>
+                <th>sterile</th>
+                <th>quarantaine</th>
+                <th>zooProprietaire</th>
+                <th></th>
+            </tr>
+            {% for a in animal %}
+                <tr>
+                    <td>{{ a.nom }}</td>
+                    <td>{{ a.identification }}</td>
+                    <td>{{ a.genre }}</td>
+                    <td>{{ a.sexe }}</td>
+                    <td>{{ a.espece }}</td>
+                    <td>{% if a.sterile == 0 %}
+                            non
+                        {% elseif a.sterile == 1%}
+                            oui
+                        {% endif %}</td>
+                    <td>{% if a.quarantaine == 0 %}
+                            non
+                        {% elseif a.quarantaine == 1%}
+                            oui
+                        {% endif %}</td>
+                    <td>{% if a.zooProprietaire == 0 %}
+                            non
+                        {% elseif a.zooProprietaire == 1%}
+                            oui
+                        {% endif %}</td>
+                    <td>
+                        <a href="{{ path("app_animal_modifier", {"id":a.id}) }}" class="btn btn-info">Modifier l'animal</a>
+                        <a href="{{ path("app_animal_supprimer", {"id":a.id}) }}" class="btn btn-danger">Supprimer l'animal</a>
+                    </td>
+                </tr>
             {% endfor %}
-        </div>
+        </table>
         <a href="{{ path("app_animal_ajouter") }}" class="mt-5 btn btn-primary">Ajouter un animal</a>
     </div>
 {% endblock %}

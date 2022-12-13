@@ -14,7 +14,7 @@
             {% for e in espace %}
                 <tr>
                     <td>{{ e.nom }}</td>
-                    <td>{{ e.superficie }}</td>
+                    <td>{{ e.superficie }}m²</td>
                     <td>
                         <a href="{{ path("app_espace_modifier", {"id":e.id}) }}" class="btn btn-info">Modifier l'espace</a>
                         <a href="{{ path("app_espace_supprimer", {"id":e.id}) }}" class="btn btn-danger">Supprimer l'espace</a>

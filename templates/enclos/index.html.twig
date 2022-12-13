@@ -19,7 +19,7 @@
             {% for e in enclos %}
                 <tr>
                     <td>{{ e.nom }}</td>
-                    <td>{{ e.superficie }}</td>
+                    <td>{{ e.superficie }}m²</td>
                     <td>
                         <a href="{{ path("app_enclos_modifier", {"id":e.id}) }}" class="btn btn-info">Modifier l'enclos</a>
                         <a href="{{ path("app_enclos_supprimer", {"id":e.id}) }}" class="btn btn-danger">Supprimer l'enclos</a>
