@@ -15,7 +15,6 @@
                 <tr>
                     <td>{{ e.nom }}</td>
                     <td>{{ e.superficie }}</td>
-
                     <td>
                         <a href="{{ path("app_espace_modifier", {"id":e.id}) }}" class="btn btn-info">Modifier l'espace</a>
                         <a href="{{ path("app_espace_supprimer", {"id":e.id}) }}" class="btn btn-danger">Supprimer l'espace</a>
@@ -27,6 +26,5 @@
         <a href="{{ path("app_espace_ajouter") }}" class="btn btn-primary">Ajouter un espace</a>
         <a href="{{ path("app_enclos_ajouter") }}" class="btn btn-primary">Ajouter un enclos</a>
         <a href="{{ path('app_animal_ajouter') }}" class="btn btn-primary">Ajouter un animal</a>
-
     </div>
 {% endblock %}

@@ -7,6 +7,8 @@ use App\Entity\Enclos;
 use App\Entity\Espace;
 use App\Form\AnimalSupprimerType;
 use App\Form\AnimalType;
+use App\Form\EnclosSupprimerType;
+use App\Form\EnclosType;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -15,6 +17,32 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class AnimalController extends AbstractController
 {
+    #[Route('/animals/ajouter', name: 'app_animal_ajouter')]
+    public function ajouter(ManagerRegistry $doctrine, Request $request): Response
+    {
+
+        $animal= new Animal();
+
+        $form=$this->createForm(AnimalType::class, $animal);
+
+
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()){
+
+            $em=$doctrine->getManager();
+
+            $em->persist(($animal));
+
+
+            $em->flush();
+
+            return $this->redirectToRoute("app_espace");
+        }
+
+        return $this->render("animal/ajouter.html.twig",[
+            "formulaire"=>$form->createView()
+        ]);
+    }
 
     #[Route('/animal/modifier/{id}', name: 'app_animal_modifier')]
     public function modifier($id, ManagerRegistry $doctrine, Request $request): Response
@@ -49,34 +77,6 @@ class AnimalController extends AbstractController
         ]);
     }
 
-
-    #[Route('/animal/ajouter', name: 'app_animal_ajouter')]
-    public function ajouter(ManagerRegistry $doctrine, Request $request): Response
-    {
-
-        $animal= new Animal();
-
-        $form=$this->createForm(AnimalType::class, $animal);
-
-
-        $form->handleRequest($request);
-        if ($form->isSubmitted() && $form->isValid()){
-
-            $em=$doctrine->getManager();
-
-            $em->persist(($animal));
-
-
-            $em->flush();
-
-            return $this->redirectToRoute("app_espace");
-        }
-
-        return $this->render("animal/ajouter.html.twig",[
-            "formulaire"=>$form->createView()
-        ]);
-    }
-
     #[Route('/animal/supprimer/{id}', name: 'app_animal_supprimer')]
     public function supprimer($id, ManagerRegistry $doctrine, Request $request): Response
     {
@@ -103,7 +103,7 @@ class AnimalController extends AbstractController
 
             $em->flush();
 
-            return $this->redirectToRoute("app_animal");
+            return $this->redirectToRoute("app_espace");
         }
 
         return $this->render("animal/supprimer.html.twig",[
@@ -112,4 +112,5 @@ class AnimalController extends AbstractController
         ]);
 
     }
+
 }

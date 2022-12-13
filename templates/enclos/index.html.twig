@@ -10,19 +10,24 @@
 
     <div class="container">
         <h1>Gestion des enclos</h1>
-        <div class="row">
+        <table class="table table-striped">
+            <tr>
+                <th>Nom</th>
+                <th>Superficie</th>
+                <th></th>
+            </tr>
             {% for e in enclos %}
-                <div class="col col-3">
-                        <div class="card-body">
-                                <span>Je m'appelle <b>{{ e.nom }}</b> et <b>je mesure {{ e.superficie }}</b></span>
-                            <div class="bouton-enclos">
-                                <a href="{{ path("app_enclos_modifier", {"id": e.id}) }}" class="btn btn-info">modifier</a>
-                                <a href="{{ path("app_enclos_supprimer", {"id": e.id}) }}" class="btn btn-danger">supprimer</a>
-                            </div>
-                        </div>
-                    </div>
+                <tr>
+                    <td>{{ e.nom }}</td>
+                    <td>{{ e.superficie }}</td>
+                    <td>
+                        <a href="{{ path("app_enclos_modifier", {"id":e.id}) }}" class="btn btn-info">Modifier l'enclos</a>
+                        <a href="{{ path("app_enclos_supprimer", {"id":e.id}) }}" class="btn btn-danger">Supprimer l'enclos</a>
+                        <a href="{{ path("app_enclos_animal", {"id":e.id}) }}" class="btn btn-warning">Voir les animaux</a>
+                    </td>
+                </tr>
             {% endfor %}
-        </div>
+        </table>
         <a href="{{ path("app_enclos_ajouter") }}" class="mt-5 btn btn-primary">Ajouter un enclos</a>
     </div>
 {% endblock %}

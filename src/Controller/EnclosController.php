@@ -3,11 +3,8 @@
 namespace App\Controller;
 
 
-use App\Entity\Chaton;
 use App\Entity\Enclos;
 use App\Entity\Espace;
-use App\Form\ChatonSupprimerType;
-use App\Form\ChatonType;
 use App\Form\EnclosSupprimerType;
 use App\Form\EnclosType;
 use Doctrine\Persistence\ManagerRegistry;

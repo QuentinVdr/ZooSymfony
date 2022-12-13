@@ -1,9 +1,28 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Voir animal de l'enlos{% endblock %}
+{% block title %}un enclos{% endblock %}
 
 {% block body %}
+    <style>
+        .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
+        .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
+    </style>
+
     <div class="container">
-        <h1>Voir animal de l'enclo {{ enclo.nom }}</h1>
+        {% for a in animal %}
+        <h1>Gestion des animaux {{ a.nom }}</h1>
+        <div class="row">
+                <div class="col col-3">
+                    <div class="card-body">
+                        <span>Je m'appelle <b>{{ a.nom }}</b></span>
+                        <div class="bouton-animal">
+                            <a href="{{ path("app_animal_modifier", {"id": a.id}) }}" class="btn btn-info">modifier</a>
+                            <a href="{{ path("app_animal_supprimer", {"id": a.id}) }}" class="btn btn-danger">supprimer</a>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+        <a href="{{ path("app_animal_ajouter") }}" class="mt-5 btn btn-primary">Ajouter un animal</a>
     </div>
 {% endblock %}
