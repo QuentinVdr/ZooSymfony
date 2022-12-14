@@ -28,7 +28,7 @@ class Espace
     #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
     private ?\DateTimeInterface $dateFermeture = null;
 
-    #[ORM\OneToMany(mappedBy: 'Espace', targetEntity: Enclos::class, orphanRemoval: true)]
+    #[ORM\OneToMany(mappedBy: 'espace', targetEntity: Enclos::class, orphanRemoval: true)]
     private Collection $enclos;
 
     public function __construct()
