@@ -49,7 +49,7 @@ class Animal
 
     #[ORM\ManyToOne(inversedBy: 'animals')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?enclos $enclos = null;
+    private ?Enclos $enclos = null;
 
     public function getId(): ?int
     {
@@ -188,12 +188,12 @@ class Animal
         return $this;
     }
 
-    public function getEnclos(): ?enclos
+    public function getEnclos(): ?Enclos
     {
         return $this->enclos;
     }
 
-    public function setEnclos(?enclos $enclos): self
+    public function setEnclos(?Enclos $enclos): self
     {
         $this->enclos = $enclos;
 
