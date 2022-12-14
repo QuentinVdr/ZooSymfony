@@ -29,7 +29,7 @@ class Enclos
 
     #[ORM\ManyToOne(inversedBy: 'enclos')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?espace $espace = null;
+    private ?Espace $espace = null;
 
     #[ORM\OneToMany(mappedBy: 'enclos', targetEntity: Animal::class)]
     private Collection $animals;
@@ -92,12 +92,12 @@ class Enclos
         return $this;
     }
 
-    public function getEspace(): ?espace
+    public function getEspace(): ?Espace
     {
         return $this->espace;
     }
 
-    public function setEspace(?espace $espace): self
+    public function setEspace(?Espace $espace): self
     {
         $this->espace = $espace;
 
