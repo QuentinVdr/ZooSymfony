@@ -18,28 +18,47 @@ use Symfony\Component\Routing\Annotation\Route;
 class AnimalController extends AbstractController
 {
     #[Route('/animals/ajouter/{error}', name: 'app_animal_ajouter')]
-    public function ajouter($error ,ManagerRegistry $doctrine, Request $request): Response
+    public function ajouter($error, ManagerRegistry $doctrine, Request $request): Response
     {
 
-        $animal= new Animal();
+        $animal = new Animal();
 
-        $form=$this->createForm(AnimalType::class, $animal);
+        $form = $this->createForm(AnimalType::class, $animal);
 
 
         $form->handleRequest($request);
-        if ($form->isSubmitted() && $form->isValid()){
+        if ($form->isSubmitted() && $form->isValid()) {
             $sexe = $animal->getSexe();
             $sterile = $animal->isSterile();
+            $dateArrivee = $animal->getDateArrivee();
+            $dateDepart = $animal->getDateDepart();
+            $dateNaissance = $animal->getDateNaissance();
 
-            if ($sexe == "Non défini"){
-                if($sterile == 1 ){
+
+            if ($sexe == "Non défini") {
+                if ($sterile == 1) {
                     $error = "1";
                     return $this->redirectToRoute("app_animal_ajouter", ["error" => $error]);
                 }
             }
+            if ($dateArrivee != null && $dateDepart != null) {
+                if ($dateArrivee == null && $dateDepart != null) {
+                    $error = "2";
+                    return $this->redirectToRoute("app_animal_ajouter", ["error" => $error]);
+                }
+
+                if ($dateArrivee->getTimestamp() > $dateDepart->getTimestamp()) {
+                    $error = "3";
+                    return $this->redirectToRoute("app_animal_ajouter", ["error" => $error]);
+                }
+            }
+            if ($dateArrivee->getTimestamp() > $dateNaissance->getTimestamp()) {
+                $error = "4";
+                return $this->redirectToRoute("app_animal_ajouter", ["error" => $error]);
+            }
 
 
-            $em=$doctrine->getManager();
+            $em = $doctrine->getManager();
 
             $em->persist(($animal));
 
@@ -49,9 +68,9 @@ class AnimalController extends AbstractController
             return $this->redirectToRoute("app_espace");
         }
 
-        return $this->render("animal/ajouter.html.twig",[
-            "formulaire"=>$form->createView(),
-            "error"=>$error
+        return $this->render("animal/ajouter.html.twig", [
+            "formulaire" => $form->createView(),
+            "error" => $error
         ]);
     }
 
@@ -74,13 +93,31 @@ class AnimalController extends AbstractController
 
             $sexe = $animal->getSexe();
             $sterile = $animal->isSterile();
+            $dateArrivee = $animal->getDateArrivee();
+            $dateDepart = $animal->getDateDepart();
+            $dateNaissance = $animal->getDateNaissance();
 
 
-            if ($sexe == "Non défini"){
-                if($sterile == 1 ){
+            if ($sexe == "Non défini") {
+                if ($sterile == 1) {
                     $error = "1";
                     return $this->redirectToRoute("app_animal_ajouter", ["error" => $error]);
                 }
+            }
+            if ($dateArrivee != null && $dateDepart != null) {
+                if ($dateArrivee == null && $dateDepart != null) {
+                    $error = "2";
+                    return $this->redirectToRoute("app_animal_ajouter", ["error" => $error]);
+                }
+
+                if ($dateArrivee->getTimestamp() > $dateDepart->getTimestamp()) {
+                    $error = "3";
+                    return $this->redirectToRoute("app_animal_ajouter", ["error" => $error]);
+                }
+            }
+            if ($dateArrivee->getTimestamp() > $dateNaissance->getTimestamp()) {
+                $error = "4";
+                return $this->redirectToRoute("app_animal_ajouter", ["error" => $error]);
             }
 
             $em = $doctrine->getManager();
@@ -93,10 +130,10 @@ class AnimalController extends AbstractController
             return $this->redirectToRoute("app_espace");
         }
 
-        return $this->render("animal/modifier.html.twig",[
-            "animal"=>$animal,
-            "formulaire"=>$form->createView(),
-            "error"=>$error
+        return $this->render("animal/modifier.html.twig", [
+            "animal" => $animal,
+            "formulaire" => $form->createView(),
+            "error" => $error
         ]);
     }
 
@@ -107,19 +144,19 @@ class AnimalController extends AbstractController
         $animal = $doctrine->getRepository(Animal::class)->find($id);
 
 
-        if (!$animal){
+        if (!$animal) {
             throw $this->createNotFoundException("Pas d'animal avec l'id $id");
         }
 
 
-        $form=$this->createForm(AnimalSupprimerType::class, $animal);
+        $form = $this->createForm(AnimalSupprimerType::class, $animal);
 
 
         $form->handleRequest($request);
-        if ($form->isSubmitted() && $form->isValid()){
+        if ($form->isSubmitted() && $form->isValid()) {
 
 
-            $em=$doctrine->getManager();
+            $em = $doctrine->getManager();
 
             $em->remove(($animal));
 
@@ -129,9 +166,9 @@ class AnimalController extends AbstractController
             return $this->redirectToRoute("app_espace");
         }
 
-        return $this->render("animal/supprimer.html.twig",[
-            "animal"=>$animal,
-            "formulaire"=>$form->createView()
+        return $this->render("animal/supprimer.html.twig", [
+            "animal" => $animal,
+            "formulaire" => $form->createView()
         ]);
 
     }
