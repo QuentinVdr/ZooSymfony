@@ -5,15 +5,27 @@ namespace App\Entity;
 use App\Repository\AnimalRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+
 
 #[ORM\Entity(repositoryClass: AnimalRepository::class)]
 class Animal
 {
+
+
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
 
+
+    #[Assert\Length(
+        min: 14,
+        max: 14,
+        minMessage: 'Your first name must be at least {{ limit }} characters long',
+        maxMessage: 'Your first name cannot be longer than {{ limit }} characters',
+    )]
     #[ORM\Column(length: 14)]
     private ?string $identification = null;
 
@@ -50,6 +62,9 @@ class Animal
     #[ORM\ManyToOne(inversedBy: 'animals')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Enclos $enclos = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $image = null;
 
     public function getId(): ?int
     {
@@ -196,6 +211,18 @@ class Animal
     public function setEnclos(?Enclos $enclos): self
     {
         $this->enclos = $enclos;
+
+        return $this;
+    }
+
+    public function getImage(): ?string
+    {
+        return $this->image;
+    }
+
+    public function setImage(?string $image): self
+    {
+        $this->image = $image;
 
         return $this;
     }
