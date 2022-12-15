@@ -36,11 +36,15 @@ class EspaceController extends AbstractController
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()){
-            $dateOuverture = $espace->getDateOuverture()->getTimestamp();
-            $dateFermeture = $espace->getDateFermeture()->getTimestamp();
-
-            if ($dateOuverture > $dateFermeture){
+            $dateOuverture = $espace->getDateOuverture();
+            $dateFermeture = $espace->getDateFermeture();
+            if($dateOuverture == ""){
                 $error = "1";
+                return $this->redirectToRoute("app_espace_ajouter", ["error" => $error]);
+            }
+
+            if ($dateOuverture->getTimestamp() > $dateFermeture->getTimestamp()){
+                $error = "2";
                 return $this->redirectToRoute("app_espace_ajouter", ["error" => $error]);
             }
 
@@ -72,12 +76,16 @@ class EspaceController extends AbstractController
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()){
-            $dateOuverture = $espace->getDateOuverture()->getTimestamp();
-            $dateFermeture = $espace->getDateFermeture()->getTimestamp();
-
-            if ($dateOuverture > $dateFermeture){
+            $dateOuverture = $espace->getDateOuverture();
+            $dateFermeture = $espace->getDateFermeture();
+            if($dateOuverture == ""){
                 $error = "1";
-                return $this->redirectToRoute("app_espace_modifier", ["id" => $id, "error" => $error]);
+                return $this->redirectToRoute("app_espace_ajouter", ["error" => $error]);
+            }
+
+            if ($dateOuverture->getTimestamp() > $dateFermeture->getTimestamp()){
+                $error = "2";
+                return $this->redirectToRoute("app_espace_ajouter", ["error" => $error]);
             }
 
             $em=$doctrine->getManager();
