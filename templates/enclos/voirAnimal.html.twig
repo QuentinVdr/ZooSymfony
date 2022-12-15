@@ -14,17 +14,21 @@
             <tr>
                 <th>nom</th>
                 <th>identification</th>
+                <th>Date naissance</th>
                 <th>genre</th>
                 <th>sexe</th>
                 <th>espece</th>
                 <th>sterile</th>
                 <th>quarantaine</th>
                 <th>zooProprietaire</th>
+                <th>Date arrivé</th>
+                <th>Date départ</th>
                 <th></th>
             </tr>
             {% for a in animal %}
                 <tr>
                     <td>{{ a.nom }}</td>
+                    <td>{{ {% if(a.dateNaissance != null) %} {{a.dateNaissance.format('d-m-Y')}} {% endif %} }}</td>
                     <td>{{ a.identification }}</td>
                     <td>{{ a.genre }}</td>
                     <td>{{ a.sexe }}</td>
@@ -44,6 +48,8 @@
                         {% elseif a.zooProprietaire == 1%}
                             oui
                         {% endif %}</td>
+                    <td>{{ {% if(a.dateArrivee != null) %} {{a.dateArrivee.format('d-m-Y')}} {% endif %} }}</td>
+                    <td>{{ {% if(a.dateDepart != null) %} {{a.dateDepart.format('d-m-Y')}} {% endif %} }}</td>
                     <td>
                         <a href="{{ path("app_animal_modifier", {"id":a.id}) }}" class="btn btn-info">Modifier l'animal</a>
                         <a href="{{ path("app_animal_supprimer", {"id":a.id}) }}" class="btn btn-danger">Supprimer l'animal</a>
