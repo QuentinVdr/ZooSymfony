@@ -5,6 +5,14 @@
 {% block body %}
     <div class="container">
         <h1>Ajouter un animal</h1>
-        {{ form(formulaire)}}
+        {{ form(formulaire) }}
+        {% if error == "1" %}
+            <div class="alert alert-danger alert-dismissible d-flex align-items-center fade show">
+                <i class="bi-exclamation-octagon-fill"></i>
+                <strong class="mx-2">Erreur!</strong> tu ne peux pas dire que l'animal est stérile si tu n'as pas
+                choisi son sexe
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            </div>
+        {% endif %}
     </div>
 {% endblock %}

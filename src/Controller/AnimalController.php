@@ -17,8 +17,8 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class AnimalController extends AbstractController
 {
-    #[Route('/animals/ajouter', name: 'app_animal_ajouter')]
-    public function ajouter(ManagerRegistry $doctrine, Request $request): Response
+    #[Route('/animals/ajouter/{error}', name: 'app_animal_ajouter')]
+    public function ajouter($error ,ManagerRegistry $doctrine, Request $request): Response
     {
 
         $animal= new Animal();
@@ -28,6 +28,16 @@ class AnimalController extends AbstractController
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()){
+            $sexe = $animal->getSexe();
+            $sterile = $animal->isSterile();
+
+            if ($sexe == "Non défini"){
+                if($sterile == 1 ){
+                    $error = "1";
+                    return $this->redirectToRoute("app_animal_ajouter", ["error" => $error]);
+                }
+            }
+
 
             $em=$doctrine->getManager();
 
@@ -40,12 +50,13 @@ class AnimalController extends AbstractController
         }
 
         return $this->render("animal/ajouter.html.twig",[
-            "formulaire"=>$form->createView()
+            "formulaire"=>$form->createView(),
+            "error"=>$error
         ]);
     }
 
-    #[Route('/animal/modifier/{id}', name: 'app_animal_modifier')]
-    public function modifier($id, ManagerRegistry $doctrine, Request $request): Response
+    #[Route('/animal/modifier/{id}{error}', name: 'app_animal_modifier')]
+    public function modifier($id, $error, ManagerRegistry $doctrine, Request $request): Response
     {
 
         $animal = $doctrine->getRepository(Animal::class)->find($id);
@@ -61,6 +72,17 @@ class AnimalController extends AbstractController
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
 
+            $sexe = $animal->getSexe();
+            $sterile = $animal->isSterile();
+
+
+            if ($sexe == "Non défini"){
+                if($sterile == 1 ){
+                    $error = "1";
+                    return $this->redirectToRoute("app_animal_ajouter", ["error" => $error]);
+                }
+            }
+
             $em = $doctrine->getManager();
 
             $em->persist(($animal));
@@ -73,7 +95,8 @@ class AnimalController extends AbstractController
 
         return $this->render("animal/modifier.html.twig",[
             "animal"=>$animal,
-            "formulaire"=>$form->createView()
+            "formulaire"=>$form->createView(),
+            "error"=>$error
         ]);
     }
 
