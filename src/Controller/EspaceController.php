@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 
+use App\Entity\Animal;
 use App\Entity\Enclos;
 use App\Entity\Espace;
 use App\Form\EspaceSupprimerType;
@@ -115,4 +116,21 @@ class EspaceController extends AbstractController
         ]);
 
     }
+
+    #[Route('/espace/animal/{id}', name: 'app_espace_animal')]
+    public function voirAnimal($id, ManagerRegistry $doctrine): Response
+    {
+        $espace = $doctrine->getRepository(Espace::class)->find($id);
+        //si on n'a rien trouvé -> 404
+        if (!$espace) {
+            throw $this->createNotFoundException("Aucun espace avec l'id $id");
+        }
+
+        return $this->render('espace/voirAnimal.html.twig', [
+            'espace' => $espace,
+            "animal" => $espace->getEnclos()->add(Animal::class)
+        ]);
+    }
+
+
 }
