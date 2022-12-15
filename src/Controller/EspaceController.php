@@ -121,14 +121,18 @@ class EspaceController extends AbstractController
     public function voirAnimal($id, ManagerRegistry $doctrine): Response
     {
         $espace = $doctrine->getRepository(Espace::class)->find($id);
+        $enclos = $doctrine->getRepository(Enclos::class)->findBy(array('espace' => $espace));
+        $animal = $doctrine->getRepository(Animal::class)->findBy(array('enclos' => $enclos));
         //si on n'a rien trouvé -> 404
         if (!$espace) {
             throw $this->createNotFoundException("Aucun espace avec l'id $id");
+        }if (!$enclos) {
+            throw $this->createNotFoundException("Aucun enclos trouvé");
         }
 
         return $this->render('espace/voirAnimal.html.twig', [
             'espace' => $espace,
-            "animal" => $espace->getEnclos()->add(Animal::class)
+            "animal" => $animal
         ]);
     }
 
