@@ -129,6 +129,9 @@ class EspaceController extends AbstractController
         }if (!$enclos) {
             throw $this->createNotFoundException("Aucun enclos trouvé");
         }
+        if (!$enclos) {
+            throw $this->createNotFoundException("Enclos non trouvé");
+        }
 
         return $this->render('espace/voirAnimal.html.twig', [
             'espace' => $espace,
