@@ -39,8 +39,8 @@ class EspaceController extends AbstractController
             $dateOuverture = $espace->getDateOuverture();
             $dateFermeture = $espace->getDateFermeture();
 
-            if ($dateOuverture != "" && $dateFermeture != ""){
-                if($dateOuverture == "" && $dateFermeture != ""){
+            if ($dateOuverture != null && $dateFermeture != null){
+                if($dateOuverture == null && $dateFermeture != null){
                     $error = "1";
                     return $this->redirectToRoute("app_espace_ajouter", ["error" => $error]);
                 }
@@ -82,8 +82,8 @@ class EspaceController extends AbstractController
             $dateOuverture = $espace->getDateOuverture();
             $dateFermeture = $espace->getDateFermeture();
 
-            if ($dateOuverture != "" && $dateFermeture != ""){
-                if($dateOuverture == "" && $dateFermeture != ""){
+            if ($dateOuverture != null && $dateFermeture != null){
+                if($dateOuverture == null && $dateFermeture != null){
                     $error = "1";
                     return $this->redirectToRoute("app_espace_ajouter", ["error" => $error]);
                 }
