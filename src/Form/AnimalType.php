@@ -7,6 +7,7 @@ use App\Entity\Categorie;
 use App\Entity\Enclos;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -24,7 +25,13 @@ class AnimalType extends AbstractType
             ->add('zooProprietaire')
             ->add('genre')
             ->add('espece')
-            ->add('sexe')
+            ->add('sexe', ChoiceType::class, [
+                'choices' => [
+                    "Non défini" => "Non défini",
+                    "Male" => "Male",
+                    "Femelle" => "Femelle",
+                ],
+            ])
             ->add('sterile')
             ->add('quarantaine')
             ->add('enclos', EntityType::class, [
