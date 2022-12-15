@@ -27,8 +27,7 @@ class EnclosController extends AbstractController
 
         return $this->render('enclos/index.html.twig', [
             'espace' => $espace,
-            'enclos' => $espace->getEnclos(),
-
+            'enclos' => $espace->getEnclos()
         ]);
     }
 

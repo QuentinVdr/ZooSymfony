@@ -13,6 +13,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use function PHPUnit\Framework\isNull;
 
 class EspaceController extends AbstractController
 {
@@ -27,19 +28,32 @@ class EspaceController extends AbstractController
         ]);
     }
 
-    #[Route('/espace/ajouter', name: 'app_espace_ajouter')]
-    public function ajouter(ManagerRegistry $doctrine, Request $request): Response
+    #[Route('/espace/ajouter/{error}', name: 'app_espace_ajouter')]
+    public function ajouter($error, ManagerRegistry $doctrine, Request $request): Response
     {
         $espace= new Espace();
         $form=$this->createForm(EspaceType::class, $espace);
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()){
+            $dateOuverture = $espace->getDateOuverture();
+            $dateFermeture = $espace->getDateFermeture();
+
+            if ($dateOuverture != null && $dateFermeture != null){
+                if($dateOuverture == null && $dateFermeture != null){
+                    $error = "1";
+                    return $this->redirectToRoute("app_espace_ajouter", ["error" => $error]);
+                }
+
+                if ($dateOuverture->getTimestamp() > $dateFermeture->getTimestamp()){
+                    $error = "2";
+                    return $this->redirectToRoute("app_espace_ajouter", ["error" => $error]);
+                }
+            }
 
             $em=$doctrine->getManager();
 
             $em->persist(($espace));
-
 
             $em->flush();
 
@@ -47,14 +61,14 @@ class EspaceController extends AbstractController
         }
 
         return $this->render("espace/ajouter.html.twig",[
-            "formulaire"=>$form->createView()
+            "formulaire"=>$form->createView(),
+            "error"=>$error
         ]);
     }
 
-    #[Route('/espace/modifier/{id}', name: 'app_espace_modifier')]
-    public function modifier($id, ManagerRegistry $doctrine, Request $request): Response
+    #[Route('/espace/modifier/{id}{error}', name: 'app_espace_modifier')]
+    public function modifier($id, $error, ManagerRegistry $doctrine, Request $request): Response
     {
-
         $espace = $doctrine->getRepository(Espace::class)->find($id);
 
         if (!$espace){
@@ -65,6 +79,20 @@ class EspaceController extends AbstractController
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()){
+            $dateOuverture = $espace->getDateOuverture();
+            $dateFermeture = $espace->getDateFermeture();
+
+            if ($dateOuverture != null && $dateFermeture != null){
+                if($dateOuverture == null && $dateFermeture != null){
+                    $error = "1";
+                    return $this->redirectToRoute("app_espace_ajouter", ["error" => $error]);
+                }
+
+                if ($dateOuverture->getTimestamp() > $dateFermeture->getTimestamp()){
+                    $error = "2";
+                    return $this->redirectToRoute("app_espace_ajouter", ["error" => $error]);
+                }
+            }
 
             $em=$doctrine->getManager();
 
@@ -77,8 +105,9 @@ class EspaceController extends AbstractController
         }
 
         return $this->render("espace/modifier.html.twig",[
+            "formulaire"=>$form->createView(),
             "espace"=>$espace,
-            "formulaire"=>$form->createView()
+            "error"=>$error
         ]);
 
     }
