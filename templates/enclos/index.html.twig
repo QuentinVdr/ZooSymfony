@@ -14,12 +14,24 @@
             <tr>
                 <th>Nom</th>
                 <th>Superficie</th>
+                <th>Animaux maximum</th>
+                <th>Quarantaine</th>
                 <th></th>
             </tr>
             {% for e in enclos %}
                 <tr>
-                    <td>{{ e.nom }}</td>
-                    <td>{{ e.superficie }}m²</td>
+                    <td><i>{{ e.nom }}</i></td>
+                    <td><i>{{ e.superficie }}m²</i></td>
+                    <td>{% if e.maxAnimaux <= 1 %}
+                            Il y a <i>{{ e.maxAnimaux}}</i> animal max
+                        {% elseif e.maxAnimaux > 1 %}
+                           Il y a <i>{{ e.maxAnimaux }}</i> animaux max
+                        {% endif %}</td>
+                    <td>{% if e.quarantaine == 0 %}
+                            Cet enclos <i>n'est pas</i> en quarantaine
+                        {% elseif e.quarantaine == 1%}
+                            Cet enclos <i>est</i> en quarantaine
+                        {% endif %}</td>
                     <td>
                         <a href="{{ path("app_enclos_modifier", {"id":e.id}) }}" class="btn btn-info">Modifier l'enclos</a>
                         <a href="{{ path("app_enclos_supprimer", {"id":e.id}) }}" class="btn btn-danger">Supprimer l'enclos</a>
