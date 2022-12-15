@@ -9,14 +9,18 @@
             <tr>
                 <th>Nom</th>
                 <th>Superficie</th>
+                <th>Date Ouverture</th>
+                <th>Date Fermeture</th>
                 <th></th>
             </tr>
             {% for e in espace %}
                 <tr>
                     <td>{{ e.nom }}</td>
                     <td>{{ e.superficie }}m²</td>
+                    <td>{% if(e.dateOuverture != null) %} {{e.dateOuverture.format('d-m-Y')}} {% endif %}</td>
+                    <td>{% if(e.dateFermeture != null) %} {{e.dateFermeture.format('d-m-Y')}} {% endif %}</td>
                     <td>
-                        <a href="{{ path("app_espace_modifier", {"id":e.id}) }}" class="btn btn-info">Modifier l'espace</a>
+                        <a href="{{ path("app_espace_modifier", {"id":e.id, "error":"0"}) }}" class="btn btn-info">Modifier l'espace</a>
                         <a href="{{ path("app_espace_supprimer", {"id":e.id}) }}" class="btn btn-danger">Supprimer l'espace</a>
                         <a href="{{ path("app_enclos", {"id":e.id}) }}" class="btn btn-warning">Voir les enclos</a>
                         <a href="{{ path("app_espace_animal", {"id":e.id}) }}" class="btn btn-warning">Voir les animaux</a>
@@ -24,7 +28,7 @@
                 </tr>
             {% endfor %}
         </table>
-        <a href="{{ path("app_espace_ajouter") }}" class="btn btn-primary">Ajouter un espace</a>
+        <a href="{{ path("app_espace_ajouter", {'error': "0"}) }}" class="btn btn-primary">Ajouter un espace</a>
         <a href="{{ path("app_enclos_ajouter") }}" class="btn btn-primary">Ajouter un enclos</a>
         <a href="{{ path('app_animal_ajouter') }}" class="btn btn-primary">Ajouter un animal</a>
     </div>

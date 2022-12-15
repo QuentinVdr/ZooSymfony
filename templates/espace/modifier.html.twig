@@ -6,5 +6,12 @@
     <div class="container">
         <h1>Modifier l'espace : <i><b>{{ espace.nom }}</b></i></h1>
         {{ form(formulaire) }}
+        {% if error == "1" %}
+            <div class="alert alert-danger alert-dismissible d-flex align-items-center fade show">
+                <i class="bi-exclamation-octagon-fill"></i>
+                <strong class="mx-2">Erreur!</strong> Ta date de fermeture est plus tôt que ta date d'ouverture
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            </div>
+        {% endif %}
     </div>
 {% endblock %}
