@@ -7,6 +7,6 @@
         <h1>Es-tu sur de vouloir supprimer l'animal : <i><b>{{ animal.nom }}</b></i> ?</h1>
         {{ form(formulaire) }}
         {# je vais mettre le bouton retour #}
-        <a href="{{ path("app_espace") }}" class="btn btn-success">Non</a>
+        <a href="{{ path("app_enclos_animal", {"id": animal.enclos.id}) }}" class="btn btn-success">Non</a>
     </div>
 {% endblock %}
