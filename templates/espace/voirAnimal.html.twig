@@ -29,13 +29,51 @@
                             {% if a.sexe == "Male" %}
                                 <p>Je suis née le {% if(a.dateNaissance != null) %}
                                     <b>{{ a.dateNaissance.format('d-m-Y') }}</b>
-                                    {% endif %}et je suis un <b>mâle</b>. Je suis un <b>{{ a.genre }}</b> appartenant à la
+                                    {% endif %}et je suis un <b>mâle</b>. Je suis un <b>{{ a.genre }}</b> appartenant à
+                                    la
                                     famille
                                     des <b>{{ a.espece }}</b>. Il se peut que je {% if a.sterile == 0 %}
                                         <b>ne sois pas</b> stérile.
                                     {% elseif a.sterile == 1 %}
                                         <b>soit</b> stérile.
                                     {% endif %}
+                                </p>
+                                <p>
+                                    {% if a.quarantaine == 0 %}
+                                        En plus, je <b>ne suis pas</b> en quarantaine 🎉!
+                                    {% elseif a.quarantaine == 1 %}
+                                        Malheureusement, je <b>suis</b> en quarantaine 😭.
+                                    {% endif %}
+
+                                    {% if(a.dateArrivee != null) %}
+                                        Mon arrivé au zoo fût le <b>{{ a.dateArrivee.format('d-m-Y') }}.</b>
+                                    {% endif %}
+
+                                    {% if(a.dateDepart != null) %}
+                                        Malheureusement je pars le <b>{{ a.dateDepart.format('d-m-Y') }}.</b>
+                                    {% endif %}
+
+                                    {% if a.zooProprietaire == 0 %}
+                                        Je <b>n'appartient pas</b> au zoo
+                                    {% elseif a.zooProprietaire == 1 %}
+                                        <b>J'appartient</b> au zoo
+                                    {% endif %}
+                                </p>
+                            {% endif %}
+
+                            {% if a.sexe == "Femelle" %}
+                                <p>Je suis née le {% if(a.dateNaissance != null) %}
+                                    <b>{{ a.dateNaissance.format('d-m-Y') }}</b>
+                                    {% endif %}et je suis une <b>femelle</b>. Je suis une <b>{{ a.genre }}</b>
+                                    appartenant à
+                                    la famille
+                                    des <b>{{ a.espece }}</b>. Il se peut que je {% if a.sterile == 0 %}
+                                        <b>ne sois pas</b> stérile.
+                                    {% elseif a.sterile == 1 %}
+                                        <b>soit</b> stérile.
+                                    {% endif %}
+                                </p>
+                                <p>
                                     {% if a.quarantaine == 0 %}
                                         En plus, je <b>ne suis pas</b> en quarantaine 🎉!
                                     {% elseif a.quarantaine == 1 %}
@@ -51,65 +89,41 @@
                                         Je <b>n'appartient pas</b> au zoo
                                     {% elseif a.zooProprietaire == 1 %}
                                         <b>J'appartient</b> au zoo
-                                    {% endif %}</p>
+                                    {% endif %}
+                                </p>
                             {% endif %}
 
-                        {% if a.sexe == "Femelle" %}
-                            <p>Je suis née le {% if(a.dateNaissance != null) %}
-                                <b>{{ a.dateNaissance.format('d-m-Y') }}</b>
-                                {% endif %}et je suis une <b>femelle</b>. Je suis une <b>{{ a.genre }}</b> appartenant à
-                                la famille
-                                des <b>{{ a.espece }}</b>. Il se peut que je {% if a.sterile == 0 %}
-                                    <b>ne sois pas</b> stérile.
-                                {% elseif a.sterile == 1 %}
-                                    <b>soit</b> stérile.
-                                {% endif %}
-                                {% if a.quarantaine == 0 %}
-                                    En plus, je <b>ne suis pas</b> en quarantaine 🎉!
-                                {% elseif a.quarantaine == 1 %}
-                                    Malheureusement, je <b>suis</b> en quarantaine 😭.
-                                {% endif %}
-                                {% if(a.dateArrivee != null) %}
-                                    Mon arrivé au zoo fût le <b>{{ a.dateArrivee.format('d-m-Y') }}.</b>
-                                {% endif %}
-                                {% if(a.dateDepart != null) %}
-                                    Malheureusement je pars le <b>{{ a.dateDepart.format('d-m-Y') }}.</b>
-                                {% endif %}
-                                {% if a.zooProprietaire == 0 %}
-                                    Je <b>n'appartient pas</b> au zoo
-                                {% elseif a.zooProprietaire == 1 %}
-                                    <b>J'appartient</b> au zoo
-                                {% endif %}</p>
-                        {% endif %}
-
-                        {% if a.sexe == "Non défini" %}
-                            <p>Je suis née le {% if(a.dateNaissance != null) %}
-                                <b>{{ a.dateNaissance.format('d-m-Y') }}</b>
-                                {% endif %}et je suis <b>non binaire</b>. Je suis un <b>{{ a.genre }}</b> appartenant à
-                                la famille
-                                des <b>{{ a.espece }}</b>. Il se peut que je {% if a.sterile == 0 %}
-                                    <b>ne sois pas</b> stérile.
-                                {% elseif a.sterile == 1 %}
-                                    <b>soit</b> stérile.
-                                {% endif %}
-                                {% if a.quarantaine == 0 %}
-                                    En plus, je <b>ne suis pas</b> en quarantaine 🎉!
-                                {% elseif a.quarantaine == 1 %}
-                                    Malheureusement, je <b>suis</b> en quarantaine 😭.
-                                {% endif %}
-                                {% if(a.dateArrivee != null) %}
-                                    Mon arrivé au zoo fût le <b>{{ a.dateArrivee.format('d-m-Y') }}.</b>
-                                {% endif %}
-                                {% if(a.dateDepart != null) %}
-                                    Malheureusement je pars le <b>{{ a.dateDepart.format('d-m-Y') }}.</b>
-                                {% endif %}
-                                {% if a.zooProprietaire == 0 %}
-                                    Je <b>n'appartient pas</b> au zoo
-                                {% elseif a.zooProprietaire == 1 %}
-                                    <b>J'appartient</b> au zoo
-                                {% endif %}</p>
-                        {% endif %}
-
+                            {% if a.sexe == "Non défini" %}
+                                <p>Je suis née le {% if(a.dateNaissance != null) %}
+                                    <b>{{ a.dateNaissance.format('d-m-Y') }}</b>
+                                    {% endif %}et je suis <b>non binaire</b>. Je suis un <b>{{ a.genre }}</b>
+                                    appartenant à
+                                    la famille
+                                    des <b>{{ a.espece }}</b>. Il se peut que je {% if a.sterile == 0 %}
+                                        <b>ne sois pas</b> stérile.
+                                    {% elseif a.sterile == 1 %}
+                                        <b>soit</b> stérile.
+                                    {% endif %}
+                                </p>
+                                <p>
+                                    {% if a.quarantaine == 0 %}
+                                        En plus, je <b>ne suis pas</b> en quarantaine 🎉!
+                                    {% elseif a.quarantaine == 1 %}
+                                        Malheureusement, je <b>suis</b> en quarantaine 😭.
+                                    {% endif %}
+                                    {% if(a.dateArrivee != null) %}
+                                        Mon arrivé au zoo fût le <b>{{ a.dateArrivee.format('d-m-Y') }}.</b>
+                                    {% endif %}
+                                    {% if(a.dateDepart != null) %}
+                                        Malheureusement je pars le <b>{{ a.dateDepart.format('d-m-Y') }}.</b>
+                                    {% endif %}
+                                    {% if a.zooProprietaire == 0 %}
+                                        Je <b>n'appartient pas</b> au zoo
+                                    {% elseif a.zooProprietaire == 1 %}
+                                        <b>J'appartient</b> au zoo
+                                    {% endif %}
+                                </p>
+                            {% endif %}
                             <a href="{{ path("app_animal_modifier", {"id":a.id, 'error': "0"}) }}"
                                class="mt-2 btn btn-info">Modifier l'animal</a>
                             <a href="{{ path("app_animal_supprimer", {"id":a.id}) }}" class="mt-2 btn btn-danger">Supprimer
