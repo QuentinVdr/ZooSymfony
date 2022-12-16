@@ -8,5 +8,12 @@
         {{ form(formulaire) }}
         {# je vais mettre le bouton retour #}
         <a href="{{ path("app_espace") }}" class="btn btn-success">Non</a>
+        {% if error == "1" %}
+            <div class="alert alert-danger alert-dismissible d-flex align-items-center fade show">
+                <i class="bi-exclamation-octagon-fill"></i>
+                <strong class="mx-2">Erreur!</strong> Tu ne peux pas supprimer l'espace car il y a encore un animal dedans
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            </div>
+        {% endif %}
     </div>
 {% endblock %}

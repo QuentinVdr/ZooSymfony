@@ -21,7 +21,7 @@
                     <td>{% if(e.dateFermeture != null) %} {{e.dateFermeture.format('d-m-Y')}} {% endif %}</td>
                     <td>
                         <a href="{{ path("app_espace_modifier", {"id":e.id, "error":"0"}) }}" class="btn btn-info">Modifier l'espace</a>
-                        <a href="{{ path("app_espace_supprimer", {"id":e.id}) }}" class="btn btn-danger">Supprimer l'espace</a>
+                        <a href="{{ path("app_espace_supprimer", {"id":e.id, "error":"0"}) }}" class="btn btn-danger">Supprimer l'espace</a>
                         <a href="{{ path("app_enclos", {"id":e.id}) }}" class="btn btn-warning">Voir les enclos</a>
                         <a href="{{ path("app_espace_animal", {"id":e.id}) }}" class="btn btn-warning">Voir les animaux</a>
                     </td>

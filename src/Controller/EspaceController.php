@@ -112,8 +112,8 @@ class EspaceController extends AbstractController
 
     }
 
-    #[Route('/espace/supprimer/{id}', name: 'app_espace_supprimer')]
-    public function supprimer($id, ManagerRegistry $doctrine, Request $request): Response
+    #[Route('/espace/supprimer/{id}{error}', name: 'app_espace_supprimer')]
+    public function supprimer($id, $error, ManagerRegistry $doctrine, Request $request): Response
     {
         $espace = $doctrine->getRepository(Espace::class)->find($id);
 
@@ -128,6 +128,16 @@ class EspaceController extends AbstractController
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()){
+            $enclos = $espace->getEnclos();
+
+            foreach ($enclos->getIterator() as $enclos){
+                if (count($enclos->getAnimals()) != 0){
+                    $error = "1";
+                }
+            }
+            if ($error == "1"){
+                return $this->redirectToRoute("app_espace_supprimer", ["id" => $id, "error" => $error]);
+            }
 
             $em=$doctrine->getManager();
 
@@ -141,6 +151,7 @@ class EspaceController extends AbstractController
 
         return $this->render("espace/supprimer.html.twig",[
             "espace"=>$espace,
+            "error"=>$error,
             "formulaire"=>$form->createView()
         ]);
 
