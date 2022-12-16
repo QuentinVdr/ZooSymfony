@@ -49,11 +49,9 @@ class EnclosController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $quarantaine = $enclos->isQuarantaine();
 
-            if ($quarantaine){
-                $animaux = $enclos->getAnimals();
-                foreach ($animaux->getIterator() as $animal){
-                    $animal->setQuarantaine(true);
-                }
+            $animaux = $enclos->getAnimals();
+            foreach ($animaux->getIterator() as $animal){
+                $animal->setQuarantaine($quarantaine);
             }
 
             $em = $doctrine->getManager();
