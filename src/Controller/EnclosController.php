@@ -42,6 +42,7 @@ class EnclosController extends AbstractController
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()){
 
+
             $em=$doctrine->getManager();
 
             $em->persist(($enclos));
@@ -118,7 +119,6 @@ class EnclosController extends AbstractController
             $em=$doctrine->getManager();
 
             $em->remove(($enclos));
-
 
             $em->flush();
 
