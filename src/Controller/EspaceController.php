@@ -50,6 +50,10 @@ class EspaceController extends AbstractController
                     return $this->redirectToRoute("app_espace_ajouter", ["error" => $error]);
                 }
             }
+            if ($dateOuverture == null && $dateFermeture != null){
+                $error = "3";
+                return $this->redirectToRoute("app_espace_ajouter", ["error" => $error]);
+            }
 
             $em=$doctrine->getManager();
 
@@ -92,6 +96,10 @@ class EspaceController extends AbstractController
                     $error = "2";
                     return $this->redirectToRoute("app_espace_modifier", ["id" => $id, "error" => $error]);
                 }
+            }
+            if ($dateOuverture == null && $dateFermeture != null){
+                $error = "3";
+                return $this->redirectToRoute("app_espace_modifier", ["id" => $id, "error" => $error]);
             }
 
             $em=$doctrine->getManager();
