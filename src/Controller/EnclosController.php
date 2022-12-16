@@ -47,6 +47,14 @@ class EnclosController extends AbstractController
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
+            $quarantaine = $enclos->isQuarantaine();
+
+            if ($quarantaine){
+                $animaux = $enclos->getAnimals();
+                foreach ($animaux->getIterator() as $animal){
+                    $animal->setQuarantaine(true);
+                }
+            }
 
             $em = $doctrine->getManager();
 
@@ -92,24 +100,24 @@ class EnclosController extends AbstractController
         ]);
     }
 
-    #[Route('/enclo/supprimer/{id}', name: 'app_enclos_supprimer')]
-    public function supprimer($id, ManagerRegistry $doctrine, Request $request): Response
+    #[Route('/enclo/supprimer/{id}{error}', name: 'app_enclos_supprimer')]
+    public function supprimer($id, $error,ManagerRegistry $doctrine, Request $request): Response
     {
-
         $enclos = $doctrine->getRepository(Enclos::class)->find($id);
-
 
         if (!$enclos){
             throw $this->createNotFoundException("Pas d'enclos avec l'id $id");
         }
-
 
         $form=$this->createForm(EnclosSupprimerType::class, $enclos);
 
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()){
-
+            if(count($enclos->getAnimals()) != 0 ){
+                $error = "1";
+                return $this->redirectToRoute("app_enclos_supprimer", ["id"=>$id, "error"=>$error]);
+            }
 
             $em=$doctrine->getManager();
 
@@ -123,6 +131,7 @@ class EnclosController extends AbstractController
 
         return $this->render("enclos/supprimer.html.twig",[
             "enclos"=>$enclos,
+            "error"=>$error,
             "formulaire"=>$form->createView()
         ]);
 

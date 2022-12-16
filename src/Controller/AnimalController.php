@@ -14,6 +14,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use function PHPUnit\Framework\isNull;
 
 class AnimalController extends AbstractController
 {
@@ -33,7 +34,7 @@ class AnimalController extends AbstractController
             $dateArrivee = $animal->getDateArrivee();
             $dateDepart = $animal->getDateDepart();
             $dateNaissance = $animal->getDateNaissance();
-
+            $enclos = $animal->getEnclos();
 
             if ($sexe == "Non défini") {
                 if ($sterile == 1) {
@@ -52,13 +53,23 @@ class AnimalController extends AbstractController
                     return $this->redirectToRoute("app_animal_ajouter", ["error" => $error]);
                 }
             }
-            if ($dateArrivee->getTimestamp() < $dateNaissance->getTimestamp()) {
-                $error = "4";
+            if (!$dateNaissance == ""){
+                if ($dateArrivee->getTimestamp() < $dateNaissance->getTimestamp()) {
+                    $error = "4";
+                    return $this->redirectToRoute("app_animal_ajouter", ["error" => $error]);
+                }
+            }
+
+            if ($enclos->getMaxAnimaux() == count($enclos->getAnimals())) {
+                $error = "5";
                 return $this->redirectToRoute("app_animal_ajouter", ["error" => $error]);
             }
 
+            if ($animal->isQuarantaine()){
+                $enclos->setQuarantaine(true);
+            }
 
-            $em = $doctrine->getManager();
+            $em=$doctrine->getManager();
 
             $em->persist(($animal));
 
@@ -69,8 +80,8 @@ class AnimalController extends AbstractController
         }
 
         return $this->render("animal/ajouter.html.twig", [
-            "formulaire" => $form->createView(),
-            "error" => $error
+            "formulaire"=>$form->createView(),
+            "error"=>$error
         ]);
     }
 
@@ -96,7 +107,7 @@ class AnimalController extends AbstractController
             $dateArrivee = $animal->getDateArrivee();
             $dateDepart = $animal->getDateDepart();
             $dateNaissance = $animal->getDateNaissance();
-
+            $enclos =$animal->getEnclos();
 
             if ($sexe == "Non défini") {
                 if ($sterile == 1) {
@@ -115,10 +126,22 @@ class AnimalController extends AbstractController
                     return $this->redirectToRoute("app_animal_modifier", ["id" => $id, "error" => $error]);
                 }
             }
-            if ($dateArrivee->getTimestamp() < $dateNaissance->getTimestamp()) {
-                $error = "4";
-                return $this->redirectToRoute("app_animal_modifier", ["id" => $id, "error" => $error]);
+            if (!$dateNaissance == ""){
+                if ($dateArrivee->getTimestamp() < $dateNaissance->getTimestamp()) {
+                    $error = "4";
+                    return $this->redirectToRoute("app_animal_modifier", ["id" => $id, "error" => $error]);
+                }
             }
+
+
+            $animaux = $enclos->getAnimals();
+            $enclosQuarantaine = false;
+            foreach ($animaux->getIterator() as $animalEnclos){
+                if ($animalEnclos->isQuarantaine()){
+                    $enclosQuarantaine = true;
+                }
+            }
+            $enclos->setQuarantaine($enclosQuarantaine);
 
             $em = $doctrine->getManager();
 

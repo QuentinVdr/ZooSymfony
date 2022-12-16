@@ -34,7 +34,7 @@
                         {% endif %}</td>
                     <td>
                         <a href="{{ path("app_enclos_modifier", {"id":e.id}) }}" class="btn btn-info">Modifier l'enclos</a>
-                        <a href="{{ path("app_enclos_supprimer", {"id":e.id}) }}" class="btn btn-danger">Supprimer l'enclos</a>
+                        <a href="{{ path("app_enclos_supprimer", {"id":e.id, "error":"0"}) }}" class="btn btn-danger">Supprimer l'enclos</a>
                         <a href="{{ path("app_enclos_animal", {"id":e.id}) }}" class="btn btn-warning">Voir les animaux</a>
                     </td>
                 </tr>
