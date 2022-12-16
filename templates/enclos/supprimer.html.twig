@@ -7,7 +7,7 @@
         <h1>Es-tu sur de vouloir supprimer l'enclos : <i><b>{{ enclos.nom }}</b></i> ?</h1>
         {{ form(formulaire) }}
         {# je vais mettre le bouton retour #}
-        <a href="{{ path("app_espace") }}" class="btn btn-success">Non</a>
+        <a href="{{ path("app_enclos", {"id":enclos.espace.id}) }}" class="btn btn-success">Non</a>
         {% if error == "1" %}
             <div class="alert alert-danger alert-dismissible d-flex align-items-center fade show">
                 <i class="bi-exclamation-octagon-fill"></i>
