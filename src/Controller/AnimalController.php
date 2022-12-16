@@ -52,7 +52,7 @@ class AnimalController extends AbstractController
                     return $this->redirectToRoute("app_animal_ajouter", ["error" => $error]);
                 }
             }
-            if ($dateArrivee->getTimestamp() > $dateNaissance->getTimestamp()) {
+            if ($dateArrivee->getTimestamp() < $dateNaissance->getTimestamp()) {
                 $error = "4";
                 return $this->redirectToRoute("app_animal_ajouter", ["error" => $error]);
             }
@@ -101,23 +101,23 @@ class AnimalController extends AbstractController
             if ($sexe == "Non défini") {
                 if ($sterile == 1) {
                     $error = "1";
-                    return $this->redirectToRoute("app_animal_ajouter", ["error" => $error]);
+                    return $this->redirectToRoute("app_animal_modifier", ["id" => $id, "error" => $error]);
                 }
             }
             if ($dateArrivee != null && $dateDepart != null) {
                 if ($dateArrivee == null && $dateDepart != null) {
                     $error = "2";
-                    return $this->redirectToRoute("app_animal_ajouter", ["error" => $error]);
+                    return $this->redirectToRoute("app_animal_ajouter", ["id" => $id, "error" => $error]);
                 }
 
                 if ($dateArrivee->getTimestamp() > $dateDepart->getTimestamp()) {
                     $error = "3";
-                    return $this->redirectToRoute("app_animal_ajouter", ["error" => $error]);
+                    return $this->redirectToRoute("app_animal_modifier", ["id" => $id, "error" => $error]);
                 }
             }
-            if ($dateArrivee->getTimestamp() > $dateNaissance->getTimestamp()) {
+            if ($dateArrivee->getTimestamp() < $dateNaissance->getTimestamp()) {
                 $error = "4";
-                return $this->redirectToRoute("app_animal_ajouter", ["error" => $error]);
+                return $this->redirectToRoute("app_animal_modifier", ["id" => $id, "error" => $error]);
             }
 
             $em = $doctrine->getManager();

@@ -85,12 +85,12 @@ class EspaceController extends AbstractController
             if ($dateOuverture != null && $dateFermeture != null){
                 if($dateOuverture == null && $dateFermeture != null){
                     $error = "1";
-                    return $this->redirectToRoute("app_espace_ajouter", ["error" => $error]);
+                    return $this->redirectToRoute("app_espace_modifier", ["id" => $id, "error" => $error]);
                 }
 
                 if ($dateOuverture->getTimestamp() > $dateFermeture->getTimestamp()){
                     $error = "2";
-                    return $this->redirectToRoute("app_espace_ajouter", ["error" => $error]);
+                    return $this->redirectToRoute("app_espace_modifier", ["id" => $id, "error" => $error]);
                 }
             }
 
