@@ -18,7 +18,6 @@ class EnclosController extends AbstractController
     #[Route('/enclos/{id}', name: 'app_enclos')]
     public function index($id, ManagerRegistry $doctrine): Response
     {
-
         $espace = $doctrine->getRepository(Espace::class)->find($id);
         //si on n'a rien trouvé -> 404
         if (!$espace) {
@@ -28,6 +27,33 @@ class EnclosController extends AbstractController
         return $this->render('enclos/index.html.twig', [
             'espace' => $espace,
             'enclos' => $espace->getEnclos()
+        ]);
+    }
+
+    #[Route('/enclo/ajouter', name: 'app_enclos_ajouter')]
+    public function ajouter(ManagerRegistry $doctrine, Request $request): Response
+    {
+
+        $enclos= new Enclos();
+
+        $form=$this->createForm(EnclosType::class, $enclos);
+
+
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()){
+
+            $em=$doctrine->getManager();
+
+            $em->persist(($enclos));
+
+
+            $em->flush();
+
+            return $this->redirectToRoute("app_enclos", ["id" => $enclos->getEspace()->getId()]);
+        }
+
+        return $this->render("enclos/ajouter.html.twig",[
+            "formulaire"=>$form->createView()
         ]);
     }
 
@@ -61,39 +87,11 @@ class EnclosController extends AbstractController
 
             $em->flush();
 
-            return $this->redirectToRoute("app_enclos", ["id" => $id]);
+            return $this->redirectToRoute("app_enclos", ["id" => $enclos->getEspace()->getId()]);
         }
 
         return $this->render("enclos/modifier.html.twig",[
             "enclos"=>$enclos,
-            "formulaire"=>$form->createView()
-        ]);
-    }
-
-
-    #[Route('/enclo/ajouter', name: 'app_enclos_ajouter')]
-    public function ajouter(ManagerRegistry $doctrine, Request $request): Response
-    {
-
-        $enclos= new Enclos();
-
-        $form=$this->createForm(EnclosType::class, $enclos);
-
-
-        $form->handleRequest($request);
-        if ($form->isSubmitted() && $form->isValid()){
-
-            $em=$doctrine->getManager();
-
-            $em->persist(($enclos));
-
-
-            $em->flush();
-
-            return $this->redirectToRoute("app_enclos", ["id" => $enclos->getEspace()->getId()]);
-        }
-
-        return $this->render("enclos/ajouter.html.twig",[
             "formulaire"=>$form->createView()
         ]);
     }
