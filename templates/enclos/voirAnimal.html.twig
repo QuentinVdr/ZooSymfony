@@ -18,8 +18,9 @@
     </style>
     <div class="container">
         <h1>Gestion des animaux de l'enclos : <b>{{ enclo.nom }}</b></h1>
-        <div class="card-group">
+        <div class="row row-cols-1 row-cols-md-2 g-4">
             {% for a in animal %}
+            <div class="col">
                 <div class="card">
                     <h4 class="text-center">{{ a.nom }}</h4>
                     <p class="text-center"> Mon numéro d'identification est <b>{{ a.identification }}</b></p>
@@ -38,7 +39,7 @@
                                 {% if a.quarantaine == 0 %}
                                     En plus, je <b>ne suis pas</b> en quarantaine 🎉!
                                 {% elseif a.quarantaine == 1 %}
-                                    Malheureusement, je <b>suis</b> en quarantaine 😭.
+                                    Malheureusement, je <b>suis</b> en quarantaine 😭
                                 {% endif %}
                                 {% if(a.dateArrivee != null) %}
                                     Mon arrivé au zoo fût le <b>{{ a.dateArrivee.format('d-m-Y') }}.</b>
@@ -57,7 +58,8 @@
                             <p>Je suis née le {% if(a.dateNaissance != null) %}
                                 <b>{{ a.dateNaissance.format('d-m-Y') }}</b>
                                 {% endif %}et je suis une <b>femelle</b>. Je suis une <b>{{ a.genre }}</b> appartenant à
-                                la famille
+                                la
+                                famille
                                 des <b>{{ a.espece }}</b>. Il se peut que je {% if a.sterile == 0 %}
                                     <b>ne sois pas</b> stérile.
                                 {% elseif a.sterile == 1 %}
@@ -85,7 +87,8 @@
                             <p>Je suis née le {% if(a.dateNaissance != null) %}
                                 <b>{{ a.dateNaissance.format('d-m-Y') }}</b>
                                 {% endif %}et je suis <b>non binaire</b>. Je suis un <b>{{ a.genre }}</b> appartenant à
-                                la famille
+                                la
+                                famille
                                 des <b>{{ a.espece }}</b>. Il se peut que je {% if a.sterile == 0 %}
                                     <b>ne sois pas</b> stérile.
                                 {% elseif a.sterile == 1 %}
@@ -94,7 +97,7 @@
                                 {% if a.quarantaine == 0 %}
                                     En plus, je <b>ne suis pas</b> en quarantaine 🎉!
                                 {% elseif a.quarantaine == 1 %}
-                                    Malheureusement, je <b>suis</b> en quarantaine 😭
+                                    Malheureusement, je <b>suis</b> en quarantaine 😭.
                                 {% endif %}
                                 {% if(a.dateArrivee != null) %}
                                     Mon arrivé au zoo fût le <b>{{ a.dateArrivee.format('d-m-Y') }}.</b>
@@ -108,14 +111,14 @@
                                     <b>J'appartient</b> au zoo
                                 {% endif %}</p>
                         {% endif %}
-
                         <a href="{{ path("app_animal_modifier", {"id":a.id, 'error': "0"}) }}"
                            class="mt-2 btn btn-info">Modifier l'animal</a>
                         <a href="{{ path("app_animal_supprimer", {"id":a.id}) }}" class="mt-2 btn btn-danger">Supprimer
                             l'animal</a>
+                        {% endfor %}
                     </div>
                 </div>
-            {% endfor %}
+            </div>
         </div>
     </div>
     <a href="{{ path("app_animal_ajouter", {'error': "0"}) }}" class="mt-5 btn btn-primary">Ajouter un animal</a>
