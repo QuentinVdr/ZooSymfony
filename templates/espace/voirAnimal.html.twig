@@ -18,9 +18,8 @@
     </style>
     <div class="container">
         <h1>Gestion des animaux de l'espace : <b>{{ espace.nom }}</b></h1>
-        <div class="row">
+        <div class="card-group">
             {% for a in animal %}
-            <div class="col col-3">
                 <div class="card">
                     <h4 class="text-center">{{ a.nom }}</h4>
                     <p class="text-center"> Mon numéro d'identification est <b>{{ a.identification }}</b></p>
@@ -114,10 +113,9 @@
                            class="mt-2 btn btn-info">Modifier l'animal</a>
                         <a href="{{ path("app_animal_supprimer", {"id":a.id}) }}" class="mt-2 btn btn-danger">Supprimer
                             l'animal</a>
-                        {% endfor %}
                     </div>
                 </div>
-            </div>
+            {% endfor %}
         </div>
     </div>
     <a href="{{ path("app_animal_ajouter", {'error': "0"}) }}" class="mt-5 btn btn-primary">Ajouter un animal</a>
