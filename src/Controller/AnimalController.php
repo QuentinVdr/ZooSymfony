@@ -76,7 +76,7 @@ class AnimalController extends AbstractController
 
             $em->flush();
 
-            return $this->redirectToRoute("app_espace");
+            return $this->redirectToRoute("app_enclos_animal", ["id" => $animal->getEnclos()->getId()]);
         }
 
         return $this->render("animal/ajouter.html.twig", [
@@ -150,7 +150,7 @@ class AnimalController extends AbstractController
 
             $em->flush();
 
-            return $this->redirectToRoute("app_espace");
+            return $this->redirectToRoute("app_enclos_animal", ["id" => $animal->getEnclos()->getId()]);
         }
 
         return $this->render("animal/modifier.html.twig", [

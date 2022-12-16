@@ -61,7 +61,7 @@ class EnclosController extends AbstractController
 
             $em->flush();
 
-            return $this->redirectToRoute("app_espace");
+            return $this->redirectToRoute("app_enclos", ["id" => $id]);
         }
 
         return $this->render("enclos/modifier.html.twig",[
@@ -90,7 +90,7 @@ class EnclosController extends AbstractController
 
             $em->flush();
 
-            return $this->redirectToRoute("app_espace");
+            return $this->redirectToRoute("app_enclos", ["id" => $enclos->getEspace()->getId()]);
         }
 
         return $this->render("enclos/ajouter.html.twig",[
